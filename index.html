@@ -6,14 +6,18 @@
   </head>
   <body>
     <h1>seikin bot</h1>
-    <textarea id="message" placeholder="ここになにかかく"></textarea>
+    <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
     <button onclick="send()">お願いする</button>
     <script>
+      const textarea = document.getElementById("message");
+      textarea.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) send();
+      });
       function send() {
-        const message = document.getElementById("message").value;
+        const message = textarea.value;
         if (message) {
           fetch("/post", { method: "POST", body: message });
-          document.getElementById("message").value = "";
+          textarea.value = "";
         }
       }
     </script>
