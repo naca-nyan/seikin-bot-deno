@@ -4,8 +4,7 @@ import discordwebhook from "https://deno.land/x/discordwebhook@v1.5.1/mod.ts";
 const WEBHOOK_URL = Deno.env.get("WEBHOOK_URL");
 
 if (!WEBHOOK_URL) {
-  console.error("set WEBHOOK_URL env");
-  Deno.exit(-1);
+  throw new Error("set WEBHOOK_URL env");
 }
 const webhook = new discordwebhook(WEBHOOK_URL);
 const decoder = new TextDecoder();
