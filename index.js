@@ -12,7 +12,12 @@ button.addEventListener("click", async () => {
 });
 
 const send = async (message) => {
-  const payload = { content: message };
+  const thumbnail = document.getElementById("thumbnail").value;
+  const payload = thumbnail
+    ? {
+        embeds: [{ description: message, thumbnail: { url: thumbnail } }],
+      }
+    : { content: message };
   await fetch("/", {
     method: "POST",
     body: JSON.stringify(payload),

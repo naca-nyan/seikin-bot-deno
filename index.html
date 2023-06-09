@@ -7,6 +7,10 @@
   <body>
     <h1>seikin bot</h1>
     <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
+    <details>
+      <label>thumbnail</label>
+      <input id="thumbnail" />
+    </details>
     <button id="send">お願いする</button>
     <script type="module" src="index.js"></script>
     <style>
@@ -16,12 +20,15 @@
         margin: 0 auto;
       }
       textarea {
-        margin-bottom: 20px;
         width: 100%;
         height: 120px;
       }
       button {
+        margin-top: 20px;
         height: 30px;
+      }
+      input {
+        width: 80%;
       }
     </style>
   </body>
