@@ -8,26 +8,7 @@
     <h1>seikin bot</h1>
     <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
     <button id="send">お願いする</button>
-    <script type="module">
-      const textarea = document.getElementById("message");
-      textarea.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) send();
-      });
-      const send = document.querySelector("#send");
-      send.addEventListener("click", async () => {
-        const message = textarea.value;
-        if (message) {
-          await fetch("/", {
-            method: "hoge",
-            body: JSON.stringify({ content: message }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          textarea.value = "";
-        }
-      });
-    </script>
+    <script type="module" src="index.js"></script>
     <style>
       body {
         padding: 20px;

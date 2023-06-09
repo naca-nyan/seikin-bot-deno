@@ -8,10 +8,39 @@ if (!WEBHOOK_URL) {
 
 const index = await Deno.readFile("index.html");
 
+const getType = (path: string) => {
+  switch (path.split(".").pop()) {
+    case "js":
+      return "text/javascript";
+    case "css":
+      return "text/css";
+    default:
+      return "text/plain";
+  }
+};
+
+const getHandler = (req: Request) => {
+  const url = new URL(req.url);
+  if (url.pathname == "/") {
+    return new Response(index, { headers: { "Content-Type": "text/html" } });
+  }
+
+  try {
+    const file = Deno.openSync("." + url.pathname);
+    return new Response(file.readable, {
+      headers: {
+        "Content-Type": getType(url.pathname),
+      },
+    });
+  } catch {
+    return Response.redirect(url.origin);
+  }
+};
+
 const handler = (req: Request) => {
   switch (req.method) {
     case "GET":
-      return new Response(index);
+      return getHandler(req);
     case "POST":
       return fetch(WEBHOOK_URL, req);
   }
