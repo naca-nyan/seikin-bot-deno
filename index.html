@@ -16,11 +16,11 @@
     </header>
     <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
     <details>
-      <summary>JSONを編集</summary>
+      <summary>JSONを編集（上級者向け）</summary>
       <textarea id="json"></textarea>
     </details>
-    <button onclick="send()">お願いする</button>
     <span id="error"></span>
+    <button onclick="send()">お願いする</button>
     <script>
       const textarea = document.getElementById("message");
       const jsonfield = document.getElementById("json");
@@ -65,7 +65,11 @@
     <style>
       textarea {
         width: 100%;
-        height: 120px;
+        height: 10em;
+      }
+      button {
+        display: block;
+        margin-left: auto;
       }
       #error {
         color: red;
