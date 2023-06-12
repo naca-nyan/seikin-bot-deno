@@ -7,25 +7,51 @@
   <body>
     <h1>seikin bot</h1>
     <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
+    <details>
+      <summary>JSONを編集</summary>
+      <textarea id="json"></textarea>
+    </details>
     <button onclick="send()">お願いする</button>
+    <span id="error"></span>
     <script>
       const textarea = document.getElementById("message");
+      const jsonfield = document.getElementById("json");
+      const errorspan = document.getElementById("error");
+      textarea.addEventListener("change", updatePayload);
+      textarea.addEventListener("keyup", updatePayload);
       textarea.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) send();
       });
-      function send() {
-        const message = textarea.value;
-        if (message) {
-          fetch("/", {
-            method: "POST",
-            body: JSON.stringify({
-              content: message,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }).then(() => (textarea.value = ""));
+      function getPayload() {
+        try {
+          return JSON.parse(jsonfield.value);
+        } catch {
+          return null;
         }
+      }
+      function updatePayload() {
+        const payload = getPayload() ?? { content: textarea.value };
+        payload.content = textarea.value;
+        jsonfield.value = JSON.stringify(payload, null, 2);
+      }
+      function send() {
+        const payload = getPayload();
+        if (!payload) {
+          errorspan.innerText = "不正な JSON だよ";
+          return;
+        }
+        errorspan.innerText = "";
+        fetch("/", {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => {
+          if (res.ok) textarea.value = "";
+          else errorspan.innerText = `だめでした: ${res.status} `;
+          res.text().then((t) => (errorspan.innerText += t));
+        });
       }
     </script>
     <style>
@@ -36,13 +62,17 @@
       }
 
       textarea {
-        margin-bottom: 20px;
         width: 100%;
         height: 120px;
       }
 
       button {
+        margin-top: 20px;
         height: 30px;
+      }
+
+      #error {
+        color: red;
       }
     </style>
   </body>
