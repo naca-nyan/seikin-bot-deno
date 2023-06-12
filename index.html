@@ -4,9 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,user-scalable=no" />
     <title>seikin bot</title>
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
+    />
   </head>
   <body>
-    <h1>seikin bot</h1>
+    <header>
+      <h2>seikin bot</h2>
+    </header>
     <textarea id="message" placeholder="ここになにかかく" autofocus></textarea>
     <details>
       <summary>JSONを編集</summary>
@@ -56,22 +63,10 @@
       }
     </script>
     <style>
-      body {
-        padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
       textarea {
         width: 100%;
         height: 120px;
       }
-
-      button {
-        margin-top: 20px;
-        height: 30px;
-      }
-
       #error {
         color: red;
       }
