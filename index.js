@@ -1,6 +1,7 @@
 const textarea = document.getElementById("message");
 const jsonfield = document.getElementById("json");
 const errorspan = document.getElementById("error");
+const sendbutton = document.getElementById("send");
 textarea.addEventListener("change", updatePayload);
 textarea.addEventListener("keyup", updatePayload);
 textarea.addEventListener("keydown", (e) => {
@@ -13,6 +14,7 @@ function getPayload() {
     return null;
   }
 }
+sendbutton.addEventListener("click", send);
 function updatePayload() {
   const payload = getPayload() ?? { content: textarea.value };
   payload.content = textarea.value;
