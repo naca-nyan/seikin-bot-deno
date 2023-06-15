@@ -27,6 +27,7 @@ function send() {
     return;
   }
   errorspan.innerText = "";
+  sendbutton.disabled = true;
   fetch("/", {
     method: "POST",
     body: JSON.stringify(payload),
@@ -34,8 +35,11 @@ function send() {
       "Content-Type": "application/json",
     },
   }).then((res) => {
-    if (res.ok) textarea.value = "";
-    else errorspan.innerText = `だめでした: ${res.status} `;
+    sendbutton.disabled = false;
+    if (res.ok) {
+      textarea.value = "";
+      updatePayload();
+    } else errorspan.innerText = `だめでした: ${res.status} `;
     res.text().then((t) => (errorspan.innerText += t));
   });
 }
